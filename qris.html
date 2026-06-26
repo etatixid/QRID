@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>QRIS Payment Frame</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+
+    background:#111;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:100vh;
+
+    padding:15px;
+
+}
+
+/*=========================
+FRAME
+=========================*/
+
+.frame{
+
+    width:100%;
+
+    max-width:480px;
+
+    background:linear-gradient(
+        180deg,
+        #2b2108,
+        #6d4b12,
+        #d2a534,
+        #5b4312
+    );
+
+    border:8px solid #e0b94b;
+
+    border-radius:22px;
+
+    padding:18px;
+
+    box-shadow:
+    0 0 25px rgba(255,215,0,.45),
+    inset 0 0 20px rgba(255,255,255,.25);
+
+}
+
+/*=========================
+HEADER
+=========================*/
+
+.header{
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+}
+
+.header h1{
+
+    color:#ffd966;
+
+    font-size:clamp(26px,5vw,42px);
+
+    font-weight:800;
+
+    text-shadow:2px 2px 0 #000;
+
+}
+
+.header p{
+
+    color:white;
+
+    margin-top:5px;
+
+    font-size:14px;
+
+}
+
+/*=========================
+TIMER
+=========================*/
+
+.timer-box{
+
+    background:#ffffff;
+
+    border-radius:12px;
+
+    padding:12px;
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+}
+
+.timer-title{
+
+    font-size:15px;
+
+    color:#666;
+
+    margin-bottom:5px;
+
+}
+
+#timer{
+
+    font-size:46px;
+
+    font-weight:800;
+
+    color:#1e8e3e;
+
+    transition:.3s;
+
+}
+
+.warning{
+
+    color:#d50000 !important;
+
+    animation:blink .8s infinite;
+
+}
+
+@keyframes blink{
+
+0%,100%{
+opacity:1;
+}
+
+50%{
+opacity:.3;
+}
+
+}
+
+/*=========================
+QRIS
+=========================*/
+
+.qris{
+
+    background:#fff;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    text-align:center;
+
+    margin-bottom:15px;
+
+}
+
+.qris img{
+
+    width:100%;
+
+    max-width:260px;
+
+    display:block;
+
+    margin:auto;
+
+}
+
+.total-title{
+
+    margin-top:15px;
+
+    font-size:15px;
+
+    color:#666;
+
+}
+
+#total{
+
+    margin-top:5px;
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#0b8043;
+
+}
+
+/*=========================
+STATUS
+=========================*/
+
+.status{
+
+    text-align:center;
+
+    font-weight:bold;
+
+    color:#d50000;
+
+    margin-top:12px;
+
+}
+
+button{
+
+    width:100%;
+
+    margin-top:18px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#0b8043;
+
+    color:white;
+
+    padding:14px;
+
+    font-size:17px;
+
+    cursor:pointer;
+
+}
+
+button:hover{
+
+    background:#086d39;
+
+}
+
+/*=========================
+RESPONSIVE
+=========================*/
+
+@media(max-width:480px){
+
+.frame{
+
+padding:15px;
+
+}
+
+#timer{
+
+font-size:38px;
+
+}
+
+#total{
+
+font-size:28px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="frame">
+
+<div class="header">
+
+<h1>PEMBAYARAN QRIS</h1>
+
+<p>Silakan scan QRIS sebelum waktu habis</p>
+
+</div>
+
+<div class="timer-box">
+
+<div class="timer-title">
+Sisa Waktu Pembayaran
+</div>
+
+<div id="timer">
+03:00
+</div>
+
+</div>
+
+<div class="qris">
+
+<img src="qris.png" alt="QRIS">
+
+<div class="total-title">
+
+Total Pembayaran
+
+</div>
+
+<div id="total">
+
+Rp 0
+
+</div>
+
+<div class="status" id="status"></div>
+
+</div>
+
+<button onclick="restartTimer()">
+Refresh Timer
+</button>
+
+</div>
+
+<script>
+
+// ===============================
+// PENGATURAN
+// ===============================
+
+// Total pembayaran
+const nominal = 150000;
+
+// Durasi timer (3 menit)
+const DURASI = 180;
+
+// ===============================
+
+document.getElementById("total").innerHTML =
+"Rp " + nominal.toLocaleString("id-ID");
+
+let sisa = DURASI;
+let interval;
+
+// ===============================
+
+function updateTimer(){
+
+    const menit = Math.floor(sisa / 60);
+    const detik = sisa % 60;
+
+    const timer = document.getElementById("timer");
+
+    timer.innerHTML =
+        String(menit).padStart(2,"0") +
+        ":" +
+        String(detik).padStart(2,"0");
+
+    // Merah saat 15 detik terakhir
+    if(sisa <= 15){
+        timer.classList.add("warning");
+    }else{
+        timer.classList.remove("warning");
+    }
+
+    // Waktu habis
+    if(sisa <= 0){
+
+        clearInterval(interval);
+
+        timer.innerHTML = "00:00";
+
+        document.getElementById("status").innerHTML =
+        "❌ QRIS EXPIRED<br>Silakan Refresh QR";
+
+        return;
+
+    }
+
+    sisa--;
+
+}
+
+// ===============================
+
+function startTimer(){
+
+    clearInterval(interval);
+
+    sisa = DURASI;
+
+    document.getElementById("status").innerHTML = "";
+
+    updateTimer();
+
+    interval = setInterval(updateTimer,1000);
+
+}
+
+// ===============================
+
+function restartTimer(){
+
+    startTimer();
+
+}
+
+// Jalankan otomatis
+startTimer();
+
+</script>
+
+</body>
+</html>
