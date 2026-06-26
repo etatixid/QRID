@@ -1,279 +1,530 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>QRIS Payment Frame</title>
+<title>POLIPONI FESTIVAL 2026 | Official Loading</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Outfit',sans-serif;
 }
 
+:root{
+
+--orange:#ff6a00;
+--yellow:#ffd600;
+--cyan:#33d7ff;
+--green:#34d657;
+--black:#000;
+--white:#fff;
+--bg:#f7f4ef;
+
+}
+
+html,
 body{
 
-    background:#111;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    min-height:100vh;
-
-    padding:15px;
+width:100%;
+height:100%;
+overflow:hidden;
+background:var(--bg);
 
 }
 
-/*=========================
-FRAME
-=========================*/
+/*===============================
+BACKGROUND GRID
+================================*/
 
-.frame{
+body::before{
 
-    width:100%;
+content:"";
 
-    max-width:480px;
+position:fixed;
+inset:0;
 
-    background:linear-gradient(
-        180deg,
-        #2b2108,
-        #6d4b12,
-        #d2a534,
-        #5b4312
-    );
+background-image:
 
-    border:8px solid #e0b94b;
+linear-gradient(rgba(0,0,0,.08) 1px,transparent 1px),
 
-    border-radius:22px;
+linear-gradient(90deg,rgba(0,0,0,.08) 1px,transparent 1px);
 
-    padding:18px;
+background-size:40px 40px;
 
-    box-shadow:
-    0 0 25px rgba(255,215,0,.45),
-    inset 0 0 20px rgba(255,255,255,.25);
+z-index:-5;
 
 }
 
-/*=========================
+/*===============================
+DECORATION
+================================*/
+
+.decoration{
+
+position:absolute;
+
+pointer-events:none;
+
+}
+
+.star{
+
+top:40px;
+right:50px;
+
+font-size:70px;
+
+font-weight:900;
+
+color:var(--yellow);
+
+animation:float 5s infinite ease-in-out;
+
+}
+
+.heart{
+
+left:35px;
+top:120px;
+
+font-size:60px;
+
+color:var(--orange);
+
+animation:float2 6s infinite ease-in-out;
+
+}
+
+.circle{
+
+left:20px;
+bottom:80px;
+
+width:70px;
+height:70px;
+
+border-radius:50%;
+
+border:10px solid var(--green);
+
+animation:rotate 10s linear infinite;
+
+}
+
+.wave{
+
+right:25px;
+bottom:80px;
+
+font-size:100px;
+
+font-weight:900;
+
+color:var(--cyan);
+
+transform:rotate(-15deg);
+
+}
+
+@keyframes float{
+
+0%{transform:translateY(0)}
+50%{transform:translateY(-12px)}
+100%{transform:translateY(0)}
+
+}
+
+@keyframes float2{
+
+0%{transform:translateY(0)}
+50%{transform:translateY(10px)}
+100%{transform:translateY(0)}
+
+}
+
+@keyframes rotate{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/*===============================
+CONTAINER
+================================*/
+
+.screen{
+
+position:fixed;
+
+inset:0;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+padding:20px;
+
+}
+
+.card{
+
+width:min(95vw,470px);
+
+background:#fff;
+
+border:5px solid #000;
+
+box-shadow:18px 18px 0 #000;
+
+padding:24px;
+
+position:relative;
+
+}
+
+/*===============================
 HEADER
-=========================*/
+================================*/
 
 .header{
 
-    text-align:center;
-
-    margin-bottom:15px;
+text-align:center;
 
 }
 
-.header h1{
+.logoBox{
 
-    color:#ffd966;
+width:120px;
+height:120px;
 
-    font-size:clamp(26px,5vw,42px);
+margin:auto;
 
-    font-weight:800;
+background:#fff;
 
-    text-shadow:2px 2px 0 #000;
+border:5px solid #000;
 
-}
+border-radius:50%;
 
-.header p{
+display:flex;
 
-    color:white;
+justify-content:center;
 
-    margin-top:5px;
+align-items:center;
 
-    font-size:14px;
+box-shadow:10px 10px 0 #000;
 
-}
-
-/*=========================
-TIMER
-=========================*/
-
-.timer-box{
-
-    background:#ffffff;
-
-    border-radius:12px;
-
-    padding:12px;
-
-    text-align:center;
-
-    margin-bottom:15px;
+overflow:hidden;
 
 }
 
-.timer-title{
+.logoBox img{
 
-    font-size:15px;
+width:75px;
 
-    color:#666;
+height:75px;
 
-    margin-bottom:5px;
-
-}
-
-#timer{
-
-    font-size:46px;
-
-    font-weight:800;
-
-    color:#1e8e3e;
-
-    transition:.3s;
+object-fit:contain;
 
 }
 
-.warning{
+.title{
 
-    color:#d50000 !important;
+margin-top:18px;
 
-    animation:blink .8s infinite;
+font-size:38px;
+
+font-weight:900;
+
+letter-spacing:2px;
+
+}
+
+.subtitle{
+
+margin-top:8px;
+
+font-size:14px;
+
+font-weight:700;
+
+letter-spacing:4px;
+
+}
+
+.colorBar{
+
+display:flex;
+
+justify-content:center;
+
+gap:6px;
+
+margin-top:18px;
+
+}
+
+.colorBar div{
+
+width:42px;
+
+height:18px;
+
+border:2px solid #000;
+
+}
+
+.orange{
+
+background:var(--orange);
+
+}
+
+.yellow{
+
+background:var(--yellow);
+
+}
+
+.cyan{
+
+background:var(--cyan);
+
+}
+
+.green{
+
+background:var(--green);
+
+}
+ /*====================================
+PROGRESS BAR PREMIUM
+====================================*/
+
+.progressWrap{
+
+margin-top:24px;
+
+height:26px;
+
+background:#fff;
+
+border:4px solid #000;
+
+overflow:hidden;
+
+position:relative;
+
+box-shadow:8px 8px 0 #000;
+
+}
+
+.progress{
+
+height:100%;
+
+width:0%;
+
+background:linear-gradient(
+90deg,
+var(--orange) 0%,
+var(--orange) 25%,
+var(--yellow) 25%,
+var(--yellow) 50%,
+var(--cyan) 50%,
+var(--cyan) 75%,
+var(--green) 75%,
+var(--green) 100%
+);
+
+transition:width .8s linear;
+
+}
+
+/*====================================
+STATUS CARD
+====================================*/
+
+.statusCard{
+
+margin-top:24px;
+
+background:#fff;
+
+border:4px solid #000;
+
+box-shadow:8px 8px 0 #000;
+
+padding:18px;
+
+}
+
+.statusTitle{
+
+display:inline-block;
+
+padding:8px 16px;
+
+background:var(--green);
+
+color:#fff;
+
+font-size:13px;
+
+font-weight:900;
+
+border:3px solid #000;
+
+box-shadow:5px 5px 0 #000;
+
+letter-spacing:2px;
+
+margin-bottom:16px;
+
+}
+
+#status{
+
+font-size:15px;
+
+font-weight:700;
+
+line-height:1.9;
+
+min-height:80px;
+
+}
+
+/*====================================
+BADGES
+====================================*/
+
+.badges{
+
+display:flex;
+
+justify-content:center;
+
+gap:12px;
+
+flex-wrap:wrap;
+
+margin-top:20px;
+
+}
+
+.badges span{
+
+padding:10px 14px;
+
+background:#fff;
+
+border:3px solid #000;
+
+box-shadow:5px 5px 0 #000;
+
+font-size:12px;
+
+font-weight:800;
+
+}
+
+/*====================================
+FOOTER
+====================================*/
+
+.footer{
+
+margin-top:22px;
+
+text-align:center;
+
+font-size:13px;
+
+font-weight:800;
+
+letter-spacing:2px;
+
+animation:blink 1.2s infinite;
 
 }
 
 @keyframes blink{
 
-0%,100%{
-opacity:1;
-}
-
-50%{
-opacity:.3;
-}
+0%{opacity:.5;}
+50%{opacity:1;}
+100%{opacity:.5;}
 
 }
 
-/*=========================
-QRIS
-=========================*/
-
-.qris{
-
-    background:#fff;
-
-    border-radius:12px;
-
-    padding:15px;
-
-    text-align:center;
-
-    margin-bottom:15px;
-
-}
-
-.qris img{
-
-    width:100%;
-
-    max-width:260px;
-
-    display:block;
-
-    margin:auto;
-
-}
-
-.total-title{
-
-    margin-top:15px;
-
-    font-size:15px;
-
-    color:#666;
-
-}
-
-#total{
-
-    margin-top:5px;
-
-    font-size:34px;
-
-    font-weight:800;
-
-    color:#0b8043;
-
-}
-
-/*=========================
-STATUS
-=========================*/
-
-.status{
-
-    text-align:center;
-
-    font-weight:bold;
-
-    color:#d50000;
-
-    margin-top:12px;
-
-}
-
-button{
-
-    width:100%;
-
-    margin-top:18px;
-
-    border:none;
-
-    border-radius:10px;
-
-    background:#0b8043;
-
-    color:white;
-
-    padding:14px;
-
-    font-size:17px;
-
-    cursor:pointer;
-
-}
-
-button:hover{
-
-    background:#086d39;
-
-}
-
-/*=========================
+/*====================================
 RESPONSIVE
-=========================*/
+====================================*/
 
 @media(max-width:480px){
 
-.frame{
+.card{
 
-padding:15px;
-
-}
-
-#timer{
-
-font-size:38px;
+padding:18px;
 
 }
 
-#total{
+.logoBox{
+
+width:95px;
+height:95px;
+
+}
+
+.logoBox img{
+
+width:60px;
+height:60px;
+
+}
+
+.title{
 
 font-size:28px;
+
+}
+
+.subtitle{
+
+font-size:11px;
+
+letter-spacing:3px;
+
+}
+
+.badges{
+
+gap:8px;
+
+}
+
+.badges span{
+
+font-size:11px;
+
+padding:8px 10px;
 
 }
 
@@ -285,141 +536,288 @@ font-size:28px;
 
 <body>
 
-<div class="frame">
+<div class="decoration star">✦</div>
+
+<div class="decoration heart">❤</div>
+
+<div class="decoration circle"></div>
+
+<div class="decoration wave">≈</div>
+
+<div class="screen">
+
+<div class="card">
 
 <div class="header">
 
-<h1>PEMBAYARAN QRIS</h1>
+<div class="logoBox">
 
-<p>Silakan scan QRIS sebelum waktu habis</p>
-
-</div>
-
-<div class="timer-box">
-
-<div class="timer-title">
-Sisa Waktu Pembayaran
-</div>
-
-<div id="timer">
-03:00
-</div>
+<img src="logo-event.png" alt="Logo Event">
 
 </div>
 
-<div class="qris">
+<div class="title">
 
-<img src="qris.png" alt="QRIS">
-
-<div class="total-title">
-
-Total Pembayaran
+POLIPONI
 
 </div>
 
-<div id="total">
+<div class="subtitle">
 
-Rp 0
-
-</div>
-
-<div class="status" id="status"></div>
+OFFICIAL TICKET LOADING
 
 </div>
 
-<button onclick="restartTimer()">
-Refresh Timer
-</button>
+<div class="colorBar">
+
+<div class="orange"></div>
+
+<div class="yellow"></div>
+
+<div class="cyan"></div>
+
+<div class="green"></div>
+
+</div>
+
+</div>
+
+<div class="progressWrap">
+
+<div class="progress" id="progressBar"></div>
+
+</div>
+
+<div class="statusCard">
+
+<div class="statusTitle">
+
+SYSTEM STATUS
+
+</div>
+
+<div id="status">
+
+Memulai sinkronisasi sistem festival...
+
+</div>
+
+</div>
+
+<div class="badges">
+
+<span>✓ VERIFIED</span>
+
+<span>✓ QR READY</span>
+
+<span>✓ TICKET READY</span>
+
+</div>
+
+<div class="footer">
+
+PLEASE DON'T CLOSE THIS PAGE
+
+</div>
+</div>
 
 </div>
 
 <script>
 
-// ===============================
-// PENGATURAN
-// ===============================
+const status=document.getElementById("status");
+const progress=document.getElementById("progressBar");
 
-// Total pembayaran
-const nominal = 150000;
+const messages=[
 
-// Durasi timer (3 menit)
-const DURASI = 180;
+"Memulai sinkronisasi sistem festival...",
 
-// ===============================
+"Memverifikasi data peserta...",
 
-document.getElementById("total").innerHTML =
-"Rp " + nominal.toLocaleString("id-ID");
+"Memeriksa integritas transaksi...",
 
-let sisa = DURASI;
-let interval;
+"Menghubungkan pusat data festival...",
 
-// ===============================
+"Memvalidasi informasi pemesanan...",
 
-function updateTimer(){
+"Menyiapkan tiket digital...",
 
-    const menit = Math.floor(sisa / 60);
-    const detik = sisa % 60;
+"Membuat QR Access...",
 
-    const timer = document.getElementById("timer");
+"Mengamankan data registrasi...",
 
-    timer.innerHTML =
-        String(menit).padStart(2,"0") +
-        ":" +
-        String(detik).padStart(2,"0");
+"Memvalidasi QR Ticket...",
 
-    // Merah saat 15 detik terakhir
-    if(sisa <= 15){
-        timer.classList.add("warning");
-    }else{
-        timer.classList.remove("warning");
-    }
+"Sinkronisasi database berhasil...",
 
-    // Waktu habis
-    if(sisa <= 0){
+"Pemeriksaan akhir sistem...",
 
-        clearInterval(interval);
+"Registrasi berhasil..."
 
-        timer.innerHTML = "00:00";
+];
 
-        document.getElementById("status").innerHTML =
-        "❌ QRIS EXPIRED<br>Silakan Refresh QR";
+let current=0;
 
-        return;
+let percent=0;
 
-    }
+const loading=setInterval(()=>{
 
-    sisa--;
+percent++;
+
+progress.style.width=percent+"%";
+
+if(percent%8===0 && current<messages.length){
+
+status.innerHTML=messages[current];
+
+current++;
 
 }
 
-// ===============================
+if(percent>=100){
 
-function startTimer(){
+clearInterval(loading);
 
-    clearInterval(interval);
+status.innerHTML="Redirect ke halaman Success...";
 
-    sisa = DURASI;
+document.body.style.transition="opacity .8s";
 
-    document.getElementById("status").innerHTML = "";
+document.body.style.opacity="0";
 
-    updateTimer();
+setTimeout(()=>{
 
-    interval = setInterval(updateTimer,1000);
+window.location.href="success.html";
 
-}
-
-// ===============================
-
-function restartTimer(){
-
-    startTimer();
+},900);
 
 }
 
-// Jalankan otomatis
-startTimer();
+},3000);
+
+/*==========================
+LOGO PULSE
+==========================*/
+
+const logo=document.querySelector(".logoBox");
+
+setInterval(()=>{
+
+logo.animate([
+
+{
+
+transform:"scale(1)"
+
+},
+
+{
+
+transform:"scale(1.08)"
+
+},
+
+{
+
+transform:"scale(1)"
+
+}
+
+],{
+
+duration:900
+
+});
+
+},1800);
+
+/*==========================
+COLOR BAR ANIMATION
+==========================*/
+
+const colors=document.querySelectorAll(".colorBar div");
+
+let glow=0;
+
+setInterval(()=>{
+
+colors.forEach((c)=>{
+
+c.style.filter="brightness(1)";
+
+});
+
+colors[glow].style.filter="brightness(1.6)";
+
+glow++;
+
+if(glow>=colors.length){
+
+glow=0;
+
+}
+
+},450);
+
+/*==========================
+BADGE EFFECT
+==========================*/
+
+document.querySelectorAll(".badges span").forEach((badge,index)=>{
+
+setInterval(()=>{
+
+badge.animate([
+
+{
+
+transform:"translateY(0)"
+
+},
+
+{
+
+transform:"translateY(-5px)"
+
+},
+
+{
+
+transform:"translateY(0)"
+
+}
+
+],{
+
+duration:600
+
+});
+
+},1500+(index*250));
+
+});
+
+/*==========================
+BACKGROUND FLOAT
+==========================*/
+
+document.querySelectorAll(".decoration").forEach((item,index)=>{
+
+let x=0;
+
+setInterval(()=>{
+
+x++;
+
+item.style.transform=
+
+"translateY("+Math.sin(x/10)*8+"px)";
+
+},40+index*5);
+
+});
 
 </script>
 
 </body>
+
 </html>
